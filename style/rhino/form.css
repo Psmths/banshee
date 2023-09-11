@@ -1,0 +1,39 @@
+input[type=submit] {
+	text-align: center;
+	font-family: var(--font_mono);
+    font-weight: lighter;
+	cursor: pointer;
+    margin: auto;
+}
+label {
+    width: 100%;
+    text-align: left;
+	font-family: var(--font_mono);
+    font-weight: lighter;  
+}
+input[type=text] {
+    width: 100%;
+	text-align: left;
+	font-family: var(--font_mono);
+    font-weight: lighter;
+}
+input[type=date] {
+    width: 100%;
+	text-align: left;
+	font-family: var(--font_mono);
+    font-weight: lighter;
+}
+select {
+    width: 100%;
+	text-align: left;
+	font-family: var(--font_mono);
+    font-weight: lighter;
+}
+textarea {
+    min-width: 100%;
+    min-height: 40em;
+	text-align: left;
+	font-family: var(--font_mono);
+    font-weight: lighter;
+	max-width: 100%;
+}

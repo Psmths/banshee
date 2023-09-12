@@ -1,7 +1,12 @@
 <?php
     // Basic configuration
     define('BLOG_TITLE', 'Banshee');
+    define('BLOG_DESCRIPTION', 'Lightweight blogging software!');
+    define('BLOG_DOMAIN', 'example.com');
     define('BLOG_THEME', 'rhino');
+
+    // Security configuration
+    define('ALLOWED_ARTICLEHTML_TAGS', '<div><b><i><strong><small><p><h1><h2><h3><img><a><ul><ol><li><table><tr><th><td><pre><code>');
 
     // Database configuration
     define('DB_SERVER', '127.0.0.1');
@@ -20,6 +25,8 @@
     define('SITE_INTRO', '
         <h1>Welcome to Banshee!</h1>
 
-        <p>Lightweight blog software.</p>
+        <p>Banshee is lightweight blog software. If you are seeing this page, it means that Banshee has been installed and can successfully connect to your database!</p>
+
+        <p>To get started in making it your own, edit the <code>config.php</code> file located in the <code>/includes</code> directory. From there, you can modify the look of your blog by selecting different themes, change this text, and add custom sidebar elements.</p>
     ');
 ?>

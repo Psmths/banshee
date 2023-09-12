@@ -9,7 +9,7 @@
      * @return string
      */
     function fmt_sql_timestamp($sql_timestamp) {
-        return date('M j, Y', strtotime($sql_timestamp));
+        return date('F j, Y', strtotime($sql_timestamp));
     }
 
      /**
@@ -23,6 +23,19 @@
      */
     function fmt_sql_timestamp_date_form($sql_timestamp) {
         return date('Y-m-d', strtotime($sql_timestamp));
+    }
+
+    /**
+     * fmt_rfc822_timestamp(sql_timestamp)
+     *
+     * Given a timestamp returned by SQL, convert to 
+     * RFC 822 format.
+     * 
+     * @param string $sql_timestamp
+     * @return string
+     */
+    function fmt_rfc822_timestamp($sql_timestamp) {
+        return date(DateTime::RFC822, strtotime($sql_timestamp));
     }
 
     /**
@@ -61,8 +74,46 @@
     //
     // Initiates a 404 error and returns the error page content
     function error_404() {
-        http_response_code(404);
-        return file_get_contents('../resource/404.html');
+        header("HTTP/1.1 404 Not Found");
+        $html_template = '
+        <h2>HTTP Error Code 404: Not Found!</h2>
+        <p>The requested page does not exist on the server. This problem can be caused by several issues including: </p>
+        <ul>
+            <li>Link is outdated.</li>
+            <li>Page was moved to a new location or was deleted.</li>
+            <li>There might be an error in the address you have entered.</li>
+            <li>The directory structure may have recently been changed or updated.</li>
+            <li>The server felt like it!</li>
+        </ul>
+        <p>For more information consult 
+        <a class="dlink lineitem" href="https://tools.ietf.org/html/rfc7231#section-6.5.4">RFC 7231</a>. 
+        ';
+        return $html_template;
+    }
+
+    // error_401()
+    //
+    // Initiates a 401 error and returns the error page content
+    function error_401() {
+        header("HTTP/1.1 401 Unauthorized");
+        $html_template = '
+        <h2>HTTP Error Code 404: Not Found!</h2>
+        <p>The request has not been applied because it lacks valid authentication credentials for the target resource.</p>
+        ';
+        return $html_template;
+    }
+
+    // error_500()
+    //
+    // Initiates a 500 Internal Server Error and returns the error page content
+    function error_500() {
+        header("HTTP/1.1 500 Internal Server Error");
+        $html_template = '
+        <h2>HTTP Error Code 500: Internal Server Error!</h2>
+        <p>An internal server error has occurred. This is a generic error message indicating that something went wrong on the server. The server might be experiencing technical difficulties, or there could be an issue with the web application.</p>
+        <p>Please try again later, or contact the website administrator for assistance.</p>
+        ';
+        return $html_template;
     }
 
     // tags_csv_string()
@@ -73,7 +124,7 @@
         $article_tag_array = get_article_tags($url);
         $article_tag_str_array = Array();
         foreach ($article_tag_array as $tag_id) {
-            array_push($article_tag_str_array, get_tag_name($tag_id)["tag_name"]);
+            array_push($article_tag_str_array, get_tag_name($tag_id));
         }
         $tags_csv = implode(", ", $article_tag_str_array);
         return $tags_csv;
@@ -287,13 +338,13 @@
         </form>
         ';
 
-        $tag_names = get_all_tag_names();
+        $tags = get_all_tag_names();
         $tag_options = "";
-        foreach ($tag_names as $tag_name) {
+        foreach ($tags as $tag) {
             $tag_options_template = '<option $selected>$tag_name</option>';
             $translation_array = array(
-                '$tag_name' => $tag_name["tag_name"],
-                '$selected' => is_article_tagged($url, $tag_name) ? "selected" : ""
+                '$tag_name' => $tag["tag_name"],
+                '$selected' => is_article_tagged($url, $tag["tag_name"]) ? "selected" : ""
             );
             $tag_options .= strtr($tag_options_template, $translation_array);
         }
@@ -412,6 +463,14 @@
         return strtr($html_tag_template, $translation_array);
     }
 
+    function error_html($error_message) {
+        $page_contents_template = '<h1>Application Error</h1><p>An error was encountered while processing this request.<p>The error returned was:</p><div class="error-block">$error</div>';
+        $translation_array = array(
+            '$error' => $error_message
+        );
+        return strtr($page_contents_template, $translation_array);
+    }
+
     // admin_html()
     // 
     // Returns HTML for the admin control panel
@@ -452,22 +511,32 @@
                 <td>$DB_SIZE_B</td>
             </tr>
             <tr>
+                <td>Article Count</td>
+                <td>$ARTICLE_COUNT</td>
+            </tr>
+            <tr>
                 <td>PHP Version</td>
                 <td>$PHP_VERSION</td>
             </tr>
         </table>
         ';
 
-        $translation_array = array(
-            '$article_admin_list' => article_admin_list(get_articles(NULL,NULL,true)),
-            '$tags_admin_list' => tags_admin_list(get_all_tag_names()),
-            '$SOFTWARE_VERSION' => SOFTWARE_VERSION,
-            '$SOFTWARE_LICENSE' => SOFTWARE_LICENSE,
-            '$DB_SERVER' => DB_SERVER,
-            '$BLOG_TITLE' => BLOG_TITLE,
-            '$PHP_VERSION' => PHP_VERSION,
-            '$DB_SIZE_B' => format_bytes(get_db_size_b()),
-        );
-        return strtr($html_article_template, $translation_array);
+        try {
+            $translation_array = array(
+                '$article_admin_list' => article_admin_list(get_articles(NULL,NULL,true)),
+                '$tags_admin_list' => tags_admin_list(get_all_tag_names()),
+                '$SOFTWARE_VERSION' => SOFTWARE_VERSION,
+                '$SOFTWARE_LICENSE' => SOFTWARE_LICENSE,
+                '$DB_SERVER' => DB_SERVER,
+                '$BLOG_TITLE' => BLOG_TITLE,
+                '$PHP_VERSION' => PHP_VERSION,
+                '$DB_SIZE_B' => format_bytes(get_db_size_b()),
+                '$ARTICLE_COUNT' => count_articles(),
+            );
+            return strtr($html_article_template, $translation_array);
+        } catch (Exception $e) {
+            return error_html($e->getMessage());
+        }
+        
     }
 ?>

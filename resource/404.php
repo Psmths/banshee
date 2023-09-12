@@ -11,6 +11,8 @@
     <head>
         <meta charset="utf-8">
         <meta property="og:type" content="website"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="theme-color" content="#ffaa60" />
         <link rel="stylesheet" href="/style/$theme/style.css">
         <title>$blog_name</title>
     </head>
@@ -21,17 +23,7 @@
                 $sidebar_contents
             </section>
             <main class="right">
-                <h2>HTTP Error Code 404: Not Found!</h2>
-                <p>The requested page does not exist on the server. This problem can be caused by several issues including: </p>
-                <ul>
-                    <li>Link is outdated.</li>
-                    <li>Page was moved to a new location or was deleted.</li>
-                    <li>There might be an error in the address you have entered.</li>
-                    <li>The directory structure may have recently been changed or updated.</li>
-                    <li>The server felt like it!</li>
-                </ul>
-                <p>For more information consult 
-                <a class="dlink lineitem" href="https://tools.ietf.org/html/rfc7231#section-6.5.4">RFC 7231</a>. 
+                $page_contents
             </main>
         </div>
     </body>
@@ -42,7 +34,7 @@
         '$theme' => BLOG_THEME,
         '$blog_name' => strtolower(BLOG_TITLE),
         '$sidebar_contents' => SIDEBAR_CONTENTS,
-        '$page_contents' => $page_contents,
+        '$page_contents' => error_404(),
     );
     echo(strtr($html_template, $translation_array));
 ?>

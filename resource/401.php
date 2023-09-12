@@ -11,6 +11,8 @@
     <head>
         <meta charset="utf-8">
         <meta property="og:type" content="website"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="theme-color" content="#ffaa60" />
         <link rel="stylesheet" href="/style/$theme/style.css">
         <title>$blog_name</title>
     </head>
@@ -21,10 +23,7 @@
                 $sidebar_contents
             </section>
             <main class="right">
-                <h2>HTTP Error Code 401: Unauthorized!</h2>
-                <p>The request has not been applied because it lacks valid authentication credentials for the target resource.</p>
-                <p>For more information consult 
-                <a class="dlink lineitem" href="https://datatracker.ietf.org/doc/html/rfc7235#section-3.1">RFC 7231</a>. 
+                $page_contents
             </main>
         </div>
     </body>
@@ -35,7 +34,7 @@
         '$theme' => BLOG_THEME,
         '$blog_name' => strtolower(BLOG_TITLE),
         '$sidebar_contents' => SIDEBAR_CONTENTS,
-        '$page_contents' => $page_contents,
+        '$page_contents' => error_401(),
     );
     echo(strtr($html_template, $translation_array));
 ?>

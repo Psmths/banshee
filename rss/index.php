@@ -17,6 +17,12 @@
     </rss> 
     ';
     
+    // Return 404 if RSS is not enabled
+    if (!ENABLE_RSS) {
+        error_404();
+        return;
+    }
+
     header('Content-type: application/xml');
 
     $articles = get_articles(NULL, NULL);
@@ -46,5 +52,6 @@
         '$blog_link' => 'https://' . BLOG_DOMAIN,
         '$article_feed' => $article_feed_xml,
     );
+
     echo(strtr($xml_template, $translation_array));
 ?>

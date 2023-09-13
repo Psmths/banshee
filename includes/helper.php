@@ -76,7 +76,7 @@
     function error_404() {
         header("HTTP/1.1 404 Not Found");
         $html_template = '
-        <h2>HTTP Error Code 404: Not Found!</h2>
+        <h2>HTTP Error Code 404: Not Found</h2>
         <p>The requested page does not exist on the server. This problem can be caused by several issues including: </p>
         <ul>
             <li>Link is outdated.</li>
@@ -97,7 +97,7 @@
     function error_401() {
         header("HTTP/1.1 401 Unauthorized");
         $html_template = '
-        <h2>HTTP Error Code 404: Not Found!</h2>
+        <h2>HTTP Error Code 401: Unauthorized</h2>
         <p>The request has not been applied because it lacks valid authentication credentials for the target resource.</p>
         ';
         return $html_template;
@@ -109,7 +109,7 @@
     function error_500() {
         header("HTTP/1.1 500 Internal Server Error");
         $html_template = '
-        <h2>HTTP Error Code 500: Internal Server Error!</h2>
+        <h2>HTTP Error Code 500: Internal Server Error</h2>
         <p>An internal server error has occurred. This is a generic error message indicating that something went wrong on the server. The server might be experiencing technical difficulties, or there could be an issue with the web application.</p>
         <p>Please try again later, or contact the website administrator for assistance.</p>
         ';
@@ -360,6 +360,61 @@
         return strtr($html_article_template, $translation_array);
     }
 
+    // settings_edit_html()
+    function settings_edit_html() {
+
+        // Construct and return the HTML
+        $html_article_template = '
+        <h1>Edit Settings</h1>
+        <form method="post" action="/admin/settings.php">
+            <div class="aeitem">
+                <label for="title">Blog Title</label>
+                <input type="text" name="title" value="$title" id="title" required><br>
+            </div>
+
+            <div class="aeitem">
+                <label for="title">Blog Domain Name</label>
+                <input type="text" name="title" value="$domain" id="title" required><br>
+            </div>
+
+            <div class="aeitem">
+                <label for="title">Blog Theme</label>
+                <select name="theme" required>
+                    <option>Rhino</option>
+                    <option>Wukong</option>
+                    <option>Shabu Shabu</option>
+                </select>
+            </div>
+
+            <br>
+
+            <label for="content">Blog Description</label>
+            <small>&emsp;This will appear in the HTML meta tags.</small>
+            <textarea class="smaller-textarea" type="text" name="content" id="content" required>$description</textarea><br>
+
+            <label for="content">Sidebar Content (HTML)</label>
+            <small>&emsp;This will appear in the sidebar of your blog.</small>
+            <textarea class="smaller-textarea" type="text" name="content" id="content" required>$sidebar_content_html</textarea><br>
+
+            <label for="content">Intro (HTML)</label>
+            <small>&emsp;This will appear on the homepage of your blog.</small>
+            <textarea class="smaller-textarea" type="text" name="content" id="content" required>$intro_content_html</textarea><br>
+
+            <br>
+
+            <input type="checkbox" id="rss_enabled" name="rss_enabled" checked />
+            <label for="rss_enabled">Enable RSS</label><br>
+
+            <br>
+            <input type="submit" value="Save Changes"><br><br>
+        </form>
+        ';
+
+        $translation_array = array(
+        );
+        return strtr($html_article_template, $translation_array);
+    }
+
     // article_create_html()
     function article_create_html() {
         // Construct and return the HTML
@@ -479,10 +534,10 @@
         $html_article_template = '
         <h1>Admin Control Panel</h1>
         <h2>Quick Actions</h2>
-        <ul>
-            <li><a href ="/admin/newarticle.php">Create a new article</a></li>
-            <li><a href ="/admin/newtag.php">Create a new tag</a></li>
-        </ul>
+
+            <a href ="/admin/newarticle.php">📝&emsp;Create a new article</a><br>
+            <a href ="/admin/newtag.php">🏷️&emsp;Create a new tag</a><br>
+
         <h2>Articles</h2>
         $article_admin_list
         <small>ℹ️&emsp;<i>Articles highlighted in blue are hidden from public index. They may still be accessed via their URL.</i></small>

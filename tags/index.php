@@ -38,7 +38,7 @@
                 $sidebar_contents
             </section>
             <main class="right">
-                $page_contents
+                $page_contents<br><br><br>
             </main>
         </div>
     </body>

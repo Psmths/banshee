@@ -1,5 +1,5 @@
+logo.png
 *.ttf
-*.png
 *.jpg
 *.jpeg
 /includes/config.php

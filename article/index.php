@@ -30,6 +30,10 @@
 
         <!-- RSS Link -->
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss">
+
+        <!-- highlight.js -->
+        <script src="/resource/script/highlightjs/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
     </head>
     <body>
         <div class="container">
@@ -38,7 +42,7 @@
                 $sidebar_contents
             </section>
             <main class="right">
-                $page_contents
+                $page_contents<br><br><br>
             </main>
         </div>
     </body>

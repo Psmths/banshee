@@ -9,6 +9,8 @@
     --accent_2:#dbcec2;
     --accent_3:#dbcec2;
     --accent_4: #f7f7f7;
+    --red: #800;
+    --green: #397300;
 }
 @media (prefers-color-scheme: dark) {
     :root {
@@ -18,6 +20,8 @@
         --background: #24221f;
         --primary: #ffaa60;
         --secondary: #24221f;
+        --red: #A00;
+        --green: #397300;
         --accent: #ffaa60;
         --accent_2: #383733;
         --accent_3: #383733;
@@ -40,7 +44,10 @@ body {
     background-color:var(--background);
     font-weight:400;
     line-height:1.7em;
-    font-size:18px 
+    font-size:18px;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
 }
 ::selection {
     background-color: var(--primary);
@@ -50,7 +57,7 @@ body {
     background-color:var(--secondary) 
 }
 .container > .banner {
-    background-color:var(--primary) 
+    background-color:var(--primary);
 }
 .container > .left {
     background-color:var(--accent_4) 
@@ -78,7 +85,6 @@ pre {
     font-weight:lighter 
 }
 code {
-    padding:2px;
     overflow:auto;
     background-color:var(--accent_2);
     border-radius:5px;
@@ -134,7 +140,7 @@ th,td {
     border:1px solid #ddd;
     font-family:var(--font_mono) 
 }
-ul,ol,li,h1,h2,h3,h4,p,pre,code,b,i,.article-list-date {
+ul,ol,li,h1,h2,h3,h4,p,pre,code,b,i,.article-list-date,small,strong,tr,td,th {
     color:var(--text) 
 }
 .white {
@@ -204,13 +210,9 @@ html {
 	margin: 0%;
 	padding: 0%;
 }
-body {
-	margin: auto;
-	overflow: hidden;
-	align-items: center;
-	height: 100vh;
-}
 .container {
+    height: 100%;
+    width: 100%;    
 	margin: auto;
 	display: grid;
 }
@@ -226,16 +228,20 @@ body {
 }
 .container > .right {
 	grid-area: right;
-	overflow: scroll;
+	overflow-y: scroll;
 	padding-left: 5%;
 	padding-right: 5%;
 	overflow-x: hidden;
 }
 @media (max-width:900px) {
+    body {
+        margin: auto;
+        overflow: hidden;
+        align-items: center;
+        height: 100vh;
+    }
 	.container {
-		width: 100vw;
-		height: 90vh;
-        margin-top: -1px;
+		width: 100%;
 		grid-template-columns: 1fr;
 		grid-template-rows: 5% 5% 90%;
 		grid-template-areas: 'banner' 'left' 'right';
@@ -251,9 +257,7 @@ body {
         padding-left: 5%;
 	}
 	.left {
-		border-bottom: 1px solid var(--text);
-	}
-	.left {
+        border-bottom: 1px solid var(--text);
 		display:flex;
 		align-items: center;
 		justify-content: center;
@@ -261,9 +265,6 @@ body {
 	.left > a {
 		white-space: nowrap;
 		margin: auto;
-	}
-	.left > br, hr {
-		display: none;
 	}
 	.disable-mobile {
 		display: none;
@@ -291,6 +292,7 @@ body {
 	.left {
 		border-left: 1px solid var(--text);
 		padding: 20px;
+        overflow-y: scroll;
 	}
 	.right {
 		border-right: 1px solid var(--text);
@@ -353,6 +355,7 @@ select {
 	text-align: left;
 	font-family: var(--font_mono);
     font-weight: lighter;
+    border-radius: 0;
 }
 textarea {
     min-width: 100%;
@@ -361,4 +364,68 @@ textarea {
 	font-family: var(--font_mono);
     font-weight: lighter;
 	max-width: 100%;
+}
+.smaller-textarea {
+    min-height: 10em;
+}
+/* highlight.js CSS */
+/*!
+  Theme: Default
+  Description: Original highlight.js style
+  Author: (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
+  Maintainer: @highlightjs/core-team
+  Website: https://highlightjs.org/
+  License: see project LICENSE
+  Touched: 2021
+*/
+pre code.hljs{
+	display:block;
+	overflow-x:auto;
+	padding:1em
+}
+code.hljs{
+  line-height:1.4em;
+}
+.hljs{
+	color:var(--text);
+}
+.hljs-comment{
+	color:var(--text);
+}
+.hljs-punctuation,.hljs-tag{
+	color:var(--text);
+}
+.hljs-tag .hljs-attr,.hljs-tag .hljs-name{
+	color:var(--text);
+}
+.hljs-attribute,.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-name,.hljs-selector-tag{
+	font-weight:500
+}
+.hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{
+	color:var(--red);
+}
+.hljs-section,.hljs-title{
+	color:var(--red);
+	font-weight:500
+}
+.hljs-link,.hljs-operator,.hljs-regexp,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-symbol,.hljs-template-variable,.hljs-variable{
+	color:var(--red);
+}
+.hljs-literal{
+	color:var(--green);
+}
+.hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-code{
+	color:var(--green);
+}
+.hljs-meta{
+	color:var(--accent);
+}
+.hljs-meta .hljs-string{
+	color:var(--accent);
+}
+.hljs-emphasis{
+	font-style:italic
+}
+.hljs-strong{
+	font-weight:500
 }

@@ -1,8 +1,8 @@
 <?php
-    require_once "../includes/db.php";
-    require_once "../includes/config.php";
-    require_once "../includes/helper.php";
-    require_once "../includes/query.php";
+    require_once "../../includes/db.php";
+    require_once "../../includes/config.php";
+    require_once "../../includes/helper.php";
+    require_once "../../includes/query.php";
 
     $html_template = '
     <!DOCTYPE html>
@@ -26,7 +26,7 @@
         <meta property="og:locale" content="en_US">
 
         <!-- Page Settings -->
-        <title>$blog_name | delete article</title>
+        <title>$blog_name | edit settings</title>
 
         <!-- RSS Link -->
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss">
@@ -47,39 +47,14 @@
 
     function build_page() {
         try {
-            // Deletion confirmation
+            // Client is requesting to edit blog settings
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                if (isset($_GET['id'])) {
-                    $client_url = filter_var($_GET['id'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                    if (!article_exists($client_url)) {
-                        return error_404();
-                    } else {
-                        return article_delete_confirm_html($client_url);
-                    }
-                }
+                return settings_edit_html();
             }
 
-            // Check if the user is confirming deletion of an article
+            // Check if the user is submitting changes to blog settings via POST
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                if (isset($_POST['url'])) {
-                    $url = filter_var($_POST['url'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-                    $rowCount = delete_article($url);
-
-                    if ($rowCount == 0) {
-                        $page_content_template = '<h1>Error</h1><p>There was an issue deleting this article. Would you like to:</p><ul><li><a href="/admin">Return to the admin panel?</a></li></ul>';
-                        $translation_array = array(
-                            '$url' => $_POST["url"]
-                        );
-                        return strtr($page_content_template, $translation_array);
-                    } else {
-                        $page_content_template = '<h1>Success</h1><p>Article was deleted! Would you like to:</p><ul><li><a href="/admin">Return to the admin panel?</a></li></ul>';
-                        $translation_array = array(
-                            '$url' => $_POST["url"]
-                        );
-                        return strtr($page_content_template, $translation_array);
-                    }
-                }
+                return error_html("ERROR: Not yet supported!");
             }
 
             return error_html("ERROR: No valid HTTP method was supplied for this page!");
@@ -94,8 +69,8 @@
     
     $translation_array = array(
         '$theme' => BLOG_THEME,
-        '$blog_name' => strtolower(BLOG_TITLE),
-        '$blog_description' => strtolower(BLOG_DESCRIPTION),
+        '$blog_name' => BLOG_TITLE,
+        '$blog_description' => BLOG_DESCRIPTION,
         '$sidebar_contents' => SIDEBAR_CONTENTS,
         '$page_contents' => $page_content,
     );

@@ -2,6 +2,7 @@
     --font_mono:FontMono;
     --font_primary:FontSerif;
     --text:#24221f;
+    --text-inverted:#24221f;
     --background:#fdfcfc;
     --primary:#ffaa60;
     --secondary:#fffbf7;
@@ -9,14 +10,20 @@
     --accent_2:#dbcec2;
     --accent_3:#dbcec2;
     --accent_4: #f7f7f7;
-    --red: #800;
-    --green: #397300;
+    --red: #800000;
+    --light-red: #FFDDDD;
+    --green: #008000;
+    --light-green: #DDFFDD;
+    --blue: #000080;
+    --light-blue: #EEEEFF;
+    --purple: #BF40BF;
 }
 @media (prefers-color-scheme: dark) {
     :root {
         --font_mono:FontMono;
         --font_primary:FontSerif;
         --text: #fdfcfc;
+        --text-inverted:#24221f;
         --background: #24221f;
         --primary: #ffaa60;
         --secondary: #24221f;
@@ -80,9 +87,9 @@ pre {
     overflow:auto;
     border:1px solid var(--text);
     background-color:var(--accent_3);
-    padding:1%;
     font-family:var(--font_mono);
-    font-weight:lighter 
+    font-weight:lighter;
+    padding: 10px;
 }
 code {
     overflow:auto;
@@ -95,10 +102,18 @@ code {
     border:1px solid var(--text);
     padding-left:20px;
     padding-right:20px;
-    margin-bottom:1% 
+    margin-bottom:1%;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 .articlebody:hover {
-    background-color:var(--accent_2) 
+    background-color:var(--accent_2);
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 .tags {
     color:var(--accent) 
@@ -112,7 +127,7 @@ a:visited {
     color:var(--accent) 
 }
 a:hover {
-    text-decoration:none;
+    text-decoration:underline;
     color:var(--accent) 
 }
 a:active {
@@ -184,7 +199,6 @@ li {
     width:100% 
 }
 .aeitem > a {
-    display:flex;
     flex:1 auto 
 }
 .aeitem > p {
@@ -381,7 +395,6 @@ textarea {
 pre code.hljs{
 	display:block;
 	overflow-x:auto;
-	padding:1em
 }
 code.hljs{
   line-height:1.4em;
@@ -390,7 +403,7 @@ code.hljs{
 	color:var(--text);
 }
 .hljs-comment{
-	color:var(--text);
+	color:var(--green);
 }
 .hljs-punctuation,.hljs-tag{
 	color:var(--text);
@@ -401,8 +414,14 @@ code.hljs{
 .hljs-attribute,.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-name,.hljs-selector-tag{
 	font-weight:500
 }
-.hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{
+.hljs-deletion,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{
 	color:var(--red);
+}
+.hljs-number {
+    color:var(--purple);
+}
+.hljs-keyword, .hljs-built_in {
+    color:var(--blue);
 }
 .hljs-section,.hljs-title{
 	color:var(--red);
@@ -414,7 +433,7 @@ code.hljs{
 .hljs-literal{
 	color:var(--green);
 }
-.hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-code{
+.hljs-addition,.hljs-bullet,.hljs-code{
 	color:var(--green);
 }
 .hljs-meta{
@@ -428,4 +447,46 @@ code.hljs{
 }
 .hljs-strong{
 	font-weight:500
+}
+.greenbox {
+    width:95%;
+    line-height:1.3em;
+    overflow:auto;
+    border:1px solid var(--text);
+    border-left:15px solid var(--green);
+    color: var(--text-inverted) !important;
+    background-color:var(--light-green);
+    padding:1%;
+    font-family:var(--font-primary);
+    font-style:oblique;
+    font-weight:light;
+    margin:auto;
+}
+.redbox {
+    width:95%;
+    line-height:1.3em;
+    overflow:auto;
+    border:1px solid var(--text);
+    border-left:15px solid var(--red);
+    color: var(--text-inverted);
+    background-color:var(--light-red);
+    padding:1%;
+    font-family:var(--font-primary);
+    font-style:oblique;
+    font-weight:light;
+    margin:auto;
+}
+.bluebox {
+    width:95%;
+    line-height:1.3em;
+    overflow:auto;
+    border:1px solid var(--text);
+    border-left:15px solid var(--blue);
+    color: var(--text-inverted);
+    background-color:var(--light-blue);
+    padding:1%;
+    font-family:var(--font-primary);
+    font-style:oblique;
+    font-weight:light;
+    margin:auto;
 }

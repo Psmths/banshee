@@ -1,8 +1,8 @@
 <?php
-    require_once "./includes/db.php";
-    require_once "./includes/config.php";
-    require_once "./includes/helper.php";
-    require_once "./includes/query.php";
+    require_once "../includes/db.php";
+    require_once "../includes/config.php";
+    require_once "../includes/helper.php";
+    require_once "../includes/query.php";
 
     $html_template = '
     <!DOCTYPE html>
@@ -67,8 +67,8 @@
     
     $translation_array = array(
         '$theme' => BLOG_THEME,
-        '$blog_name' => strtolower(BLOG_TITLE),
-        '$blog_description' => strtolower(BLOG_DESCRIPTION),
+        '$blog_name' => BLOG_TITLE,
+        '$blog_description' => BLOG_DESCRIPTION,
         '$sidebar_contents' => SIDEBAR_CONTENTS,
         '$page_contents' => $page_contents,
     );

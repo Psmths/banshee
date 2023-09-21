@@ -1,9 +1,8 @@
 <?php
-    require_once "../includes/db.php";
-    require_once "../includes/config.php";
-    require_once "../includes/helper.php";
-    require_once "../includes/query.php";
-    require_once "../includes/info.php";
+    require_once "../../includes/db.php";
+    require_once "../../includes/config.php";
+    require_once "../../includes/helper.php";
+    require_once "../../includes/query.php";
 
     $xml_template = '<?xml version="1.0" encoding="UTF-8" ?>
     <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">

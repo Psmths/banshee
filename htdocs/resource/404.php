@@ -32,7 +32,7 @@
 
     $translation_array = array(
         '$theme' => BLOG_THEME,
-        '$blog_name' => strtolower(BLOG_TITLE),
+        '$blog_name' => BLOG_TITLE,
         '$sidebar_contents' => SIDEBAR_CONTENTS,
         '$page_contents' => error_404(),
     );

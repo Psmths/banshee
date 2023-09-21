@@ -1,8 +1,8 @@
 <?php
-    require_once "../includes/db.php";
-    require_once "../includes/config.php";
-    require_once "../includes/helper.php";
-    require_once "../includes/query.php";
+    require_once "../../includes/db.php";
+    require_once "../../includes/config.php";
+    require_once "../../includes/helper.php";
+    require_once "../../includes/query.php";
 
     $html_template = '
     <!DOCTYPE html>
@@ -26,7 +26,7 @@
         <meta property="og:locale" content="en_US">
 
         <!-- Page Settings -->
-        <title>$blog_name | new tag</title>
+        <title>$blog_name | edit article</title>
 
         <!-- RSS Link -->
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss">
@@ -47,18 +47,34 @@
 
     function build_page() {
         try {
-            // Check if client is trying to create a new tag
+            // Client is requesting to edit an existing article
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                return tag_create_html();
+                if (isset($_GET['id'])) {
+                    $client_url = filter_var($_GET['id'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                    if (!article_exists($client_url)) {
+                        return error_404();
+                    } else {
+                        return article_edit_html($client_url);
+                    }
+                }
             }
 
-            // Check if the user is confirming deletion of an article
+            // Check if the user is submitting changes to an article via POST
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                if (isset($_POST['tag_name'])) {
-                    $tag_name = filter_var($_POST['tag_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                    create_tag($tag_name);
-                    return '<h1>Success</h1><p>Tag was created! Would you like to:</p><ul><li><a href="/admin">Return to the admin panel?</a></li></ul>';
-                }
+                $url = $_POST["url"];
+                $title = $_POST["title"];
+                $date = $_POST["date"];
+                $content = $_POST["content"];
+                $tag_names = $_POST["tags"];
+                
+                (isset($_POST["hidden"])) ? $hidden = 1 : $hidden = 0;
+
+                update_article($url, $title, $date, $content, $tag_names, $hidden);
+                $return_template = '<h1>Success</h1><p>Article was updated! Would you like to:</p><ul><li><a href="/article/?id=$url">View it?</a></li><li><a href="/admin">Return to the admin panel?</a></li></ul>';
+                $translation_array = array(
+                    '$url' => $_POST["url"]
+                );
+                return strtr($return_template, $translation_array);
             }
 
             return error_html("ERROR: No valid HTTP method was supplied for this page!");
@@ -73,8 +89,8 @@
     
     $translation_array = array(
         '$theme' => BLOG_THEME,
-        '$blog_name' => strtolower(BLOG_TITLE),
-        '$blog_description' => strtolower(BLOG_DESCRIPTION),
+        '$blog_name' => BLOG_TITLE,
+        '$blog_description' => BLOG_DESCRIPTION,
         '$sidebar_contents' => SIDEBAR_CONTENTS,
         '$page_contents' => $page_content,
     );

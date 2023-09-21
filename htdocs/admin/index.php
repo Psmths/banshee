@@ -1,8 +1,9 @@
 <?php
-    require_once "../includes/db.php";
-    require_once "../includes/config.php";
-    require_once "../includes/helper.php";
-    require_once "../includes/query.php";
+    require_once "../../includes/db.php";
+    require_once "../../includes/config.php";
+    require_once "../../includes/helper.php";
+    require_once "../../includes/query.php";
+    require_once "../../includes/info.php";
 
     $html_template = '
     <!DOCTYPE html>
@@ -26,14 +27,10 @@
         <meta property="og:locale" content="en_US">
 
         <!-- Page Settings -->
-        <title>$blog_name | $meta_title</title>
+        <title>$blog_name | admin panel</title>
 
         <!-- RSS Link -->
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss">
-
-        <!-- highlight.js -->
-        <script src="/resource/script/highlightjs/highlight.min.js"></script>
-        <script>hljs.highlightAll();</script>
     </head>
     <body>
         <div class="container">
@@ -42,38 +39,31 @@
                 $sidebar_contents
             </section>
             <main class="right">
-                $page_contents<br><br><br>
+                $page_contents
             </main>
         </div>
     </body>
     </html>
     ';
 
-    // Check if the user is requesting to view an article
-    $article_title = NULL; // used for the html meta title. probably a better way to do this exists?
-    try {
-        if (isset($_GET['id'])) {
-            $client_url = filter_var($_GET['id'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            if (!article_exists($client_url)) {
-                $page_contents = error_404();
-            } else {
-                $page_contents = article_html($client_url);
-                $article_title = get_article($client_url)["title"];
-            }
-        } else {
-            $page_contents = get_article_timeline();
-        }
-    } catch (Exception $e) {
-        $page_contents = error_500();
+    function build_page() {
+        try {
+            return admin_html();
+       } catch (Exception $e) {
+            // This is an administrative page, so the error should be returned
+           return error_html($e);
+       }
     }
 
+    $page_content = build_page();
+    
     $translation_array = array(
         '$theme' => BLOG_THEME,
-        '$blog_name' => strtolower(BLOG_TITLE),
-        '$blog_description' => strtolower(BLOG_DESCRIPTION),
+        '$blog_name' => BLOG_TITLE,
+        '$blog_description' => BLOG_DESCRIPTION,
         '$sidebar_contents' => SIDEBAR_CONTENTS,
-        '$page_contents' => $page_contents,
-        '$meta_title' => $article_title ? strtolower($article_title) : 'articles'
+        '$page_contents' => $page_content,
     );
+
     echo(strtr($html_template, $translation_array));
 ?>

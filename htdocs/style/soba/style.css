@@ -85,7 +85,7 @@ a:visited {
     color:var(--accent) 
 }
 a:hover {
-    text-decoration:none;
+    text-decoration:underline;
     color:var(--accent) 
 }
 a:active {
@@ -157,7 +157,6 @@ li {
     width:100% 
 }
 .aeitem > a {
-    display:flex;
     flex:1 auto 
 }
 .aeitem > p {
@@ -325,4 +324,14 @@ form {
     margin: 0;
     padding: 2px;
     width: 100%;
+}
+a[href^="https://"]:after {
+    content: url("data:image/svg+xml,%3Csvg stroke='currentColor' viewBox='0 0 15 15' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='none' d='M4.5 6.5L1.328 9.672a2.828 2.828 0 104 4L8.5 10.5m2-2l3.172-3.172a2.829 2.829 0 00-4-4L6.5 4.5m-2 6l6-6'%3E%3C/path%3E%3C/svg%3E");
+    display: inline-block;
+    vertical-align: center;
+    height:100%;
+    width:0.8em;
+    color:var(--text);
+    padding-left: 0.4em;
+    padding-right: 0.4em;
 }

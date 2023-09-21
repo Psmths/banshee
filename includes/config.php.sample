@@ -4,9 +4,10 @@
     define('BLOG_DESCRIPTION', 'Lightweight blogging software!');
     define('BLOG_DOMAIN', 'example.com');
     define('BLOG_THEME', 'rhino');
+    define('ENABLE_RSS', true);
 
     // Security configuration
-    define('ALLOWED_ARTICLEHTML_TAGS', '<div><b><i><strong><small><p><h1><h2><h3><img><a><ul><ol><li><table><tr><th><td><pre><code>');
+    define('ALLOWED_ARTICLEHTML_TAGS', '<center><div><b><i><strong><small><p><h1><h2><h3><img><a><ul><ol><li><table><tr><th><td><pre><code><br>');
 
     // Database configuration
     define('DB_SERVER', '127.0.0.1');

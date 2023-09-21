@@ -24,7 +24,7 @@ function article_exists($url) {
 /**
  * count_articles()
  *
- * Count the number of articles with a given URL.
+ * Count the total number of articles.
  *
  * @throws Exception if there's an error in counting articles
  * @return int
@@ -40,6 +40,32 @@ function count_articles() {
             return (int)$result['article_count'];
         } else {
             throw new Exception('Article count query returned unexpected result.');
+        }
+    } catch (PDOException $e) {
+        throw new Exception("ERROR [PDOException]: " . $e->getMessage());
+    }
+}
+
+
+/**
+ * count_tags()
+ *
+ * Count the total number of tags.
+ *
+ * @throws Exception if there's an error in counting tags
+ * @return int
+ */
+function count_tags() {
+    try {
+        $sql = 'SELECT COUNT(*) AS tag_count FROM tags';
+        $statement = db()->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($result && isset($result['tag_count'])) {
+            return (int)$result['tag_count'];
+        } else {
+            throw new Exception('Tag count query returned unexpected result.');
         }
     } catch (PDOException $e) {
         throw new Exception("ERROR [PDOException]: " . $e->getMessage());
@@ -124,13 +150,22 @@ function get_article_tags($url) {
  * Returns a count of how many articles have a tag
  *
  * @param string $tag_name
+ * @param bool $include_hidden
  * @throws Exception if there's an error in the database query
  * @return int
  */
-function count_tag($tag_name) {
+function count_tag($tag_name, $include_hidden = False) {
     try {
+        if ($include_hidden) {
+            $sql = 'SELECT COUNT(tag_id) FROM article_tags WHERE tag_id=:tag_id';
+        } else {
+            $sql = 'SELECT COUNT(at.tag_id) 
+            FROM article_tags AS at
+            JOIN articles AS a ON at.url = a.url
+            WHERE at.tag_id = :tag_id AND a.hidden = 0;';
+        }
         $tag_id = get_tag_id($tag_name);
-        $sql = 'SELECT COUNT(tag_id) FROM article_tags WHERE tag_id=:tag_id';
+        
         $statement = db()->prepare($sql);
         $statement->bindValue('tag_id', $tag_id, PDO::PARAM_INT);
         $statement->execute();
@@ -232,12 +267,22 @@ function get_tag_id($tag_name) {
  *
  * Returns an array of all tags
  * 
+ * @param bool $include_hidden
  * @throws Exception
  * @return array
  */
-function get_all_tag_names() {
+function get_all_tag_names($include_hidden = False) {
     try {
-        $sql = 'SELECT tags.tag_name, QTY.quantity FROM tags LEFT JOIN (SELECT COUNT(article_tags.tag_id) AS quantity, article_tags.tag_id FROM article_tags GROUP BY article_tags.tag_id) AS QTY ON tags.tag_id = QTY.tag_id ORDER BY QTY.quantity DESC';
+        $sql = 'SELECT tags.tag_name, COALESCE(QTY.quantity, 0) AS quantity
+            FROM tags
+            LEFT JOIN (
+                SELECT COUNT(at.tag_id) AS quantity, at.tag_id
+                FROM article_tags AS at
+                JOIN articles AS a ON at.url = a.url
+                WHERE a.hidden = 0
+                GROUP BY at.tag_id
+            ) AS QTY ON tags.tag_id = QTY.tag_id
+            ORDER BY QTY.quantity DESC;';
         $statement = db()->prepare($sql);
         $statement->execute();
         $result = $statement->fetchAll();

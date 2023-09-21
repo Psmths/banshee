@@ -12,8 +12,8 @@ Supports:
 
 It even comes with some themes!
 
-![Rhino](resource/img/repo_rhino_theme.png)
-![Soba](resource/img/repo_soba_theme.png)
+![Rhino](htdocs/resource/img/repo_rhino_theme.png)
+![Soba](htdocs/resource/img/repo_soba_theme.png)
 
 Additionally, administration is primarily done through an included administrative interface:
 
@@ -30,7 +30,7 @@ It is very important that the `/admin` directory be password protected! This blo
 
 ```
 ServerName blog.example.com
-DocumentRoot /var/www/blog.example.com/
+DocumentRoot /var/www/blog.example.com/htdocs
 
 Header always append X-Content-Type-Options nosniff
 Header always append X-Frame-Options deny
@@ -39,7 +39,7 @@ Header set Content-Security-Policy "default-src 'none'; img-src 'self' data:; me
 ErrorDocument 404 /resource/404.php
 ErrorDocument 401 /resource/401.php
 
-<Directory "/var/www/blog.example.com/admin">
+<Directory "/var/www/blog.example.com/htdocs/admin">
         AuthType Basic
         AuthName "Restricted"
         AuthUserFile /etc/apache2/.htpasswd

@@ -172,16 +172,14 @@
     // Parameters
     // url
     function article_html($url) {
-        $article = get_article($url);
+        $article = get_article_data($url);
 
         // Construct and return the HTML for the article body
         $html_article_template = '
-        <h1 class="nomarginbottom">
-            $title
-        </h1>
+        <h1 class="nomarginbottom">$title</h1>
         <i class="tags">$date</i>
         $content
-        <i class="tags"><svg style="display:inline-block; vertical-align:middle;height:1em;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M.5 7.5l-.354-.354a.5.5 0 000 .708L.5 7.5zm7 7l-.354.354a.5.5 0 00.708 0L7.5 14.5zm7-7l.354.354A.5.5 0 0015 7.5h-.5zm-7-7V0a.5.5 0 00-.354.146L7.5.5zM.146 7.854l7 7 .708-.708-7-7-.708.708zm7.708 7l7-7-.708-.708-7 7 .708.708zM15 7.5v-6h-1v6h1zM13.5 0h-6v1h6V0zM7.146.146l-7 7 .708.708 7-7-.708-.708zM15 1.5A1.5 1.5 0 0013.5 0v1a.5.5 0 01.5.5h1zM10.5 5a.5.5 0 01-.5-.5H9A1.5 1.5 0 0010.5 6V5zm.5-.5a.5.5 0 01-.5.5v1A1.5 1.5 0 0012 4.5h-1zm-.5-.5a.5.5 0 01.5.5h1A1.5 1.5 0 0010.5 3v1zm0-1A1.5 1.5 0 009 4.5h1a.5.5 0 01.5-.5V3z" fill="currentColor"></path></svg>&emsp;$tags</i><br><br>
+        <i class="tags"><svg class="svg-button-label-accent" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M.5 7.5l-.354-.354a.5.5 0 000 .708L.5 7.5zm7 7l-.354.354a.5.5 0 00.708 0L7.5 14.5zm7-7l.354.354A.5.5 0 0015 7.5h-.5zm-7-7V0a.5.5 0 00-.354.146L7.5.5zM.146 7.854l7 7 .708-.708-7-7-.708.708zm7.708 7l7-7-.708-.708-7 7 .708.708zM15 7.5v-6h-1v6h1zM13.5 0h-6v1h6V0zM7.146.146l-7 7 .708.708 7-7-.708-.708zM15 1.5A1.5 1.5 0 0013.5 0v1a.5.5 0 01.5.5h1zM10.5 5a.5.5 0 01-.5-.5H9A1.5 1.5 0 0010.5 6V5zm.5-.5a.5.5 0 01-.5.5v1A1.5 1.5 0 0012 4.5h-1zm-.5-.5a.5.5 0 01.5.5h1A1.5 1.5 0 0010.5 3v1zm0-1A1.5 1.5 0 009 4.5h1a.5.5 0 01.5-.5V3z" fill="currentColor"></path></svg>&emsp;$tags</i><br><br>
         ';
 
         $translation_array = array(
@@ -205,7 +203,7 @@
                 $date ｜ <a class="headerlink" href="/article/?id=$url">$title</a>
             </h3>
             <i class="tags">
-            <svg style="display:inline-block; vertical-align:middle;height:1em;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M.5 7.5l-.354-.354a.5.5 0 000 .708L.5 7.5zm7 7l-.354.354a.5.5 0 00.708 0L7.5 14.5zm7-7l.354.354A.5.5 0 0015 7.5h-.5zm-7-7V0a.5.5 0 00-.354.146L7.5.5zM.146 7.854l7 7 .708-.708-7-7-.708.708zm7.708 7l7-7-.708-.708-7 7 .708.708zM15 7.5v-6h-1v6h1zM13.5 0h-6v1h6V0zM7.146.146l-7 7 .708.708 7-7-.708-.708zM15 1.5A1.5 1.5 0 0013.5 0v1a.5.5 0 01.5.5h1zM10.5 5a.5.5 0 01-.5-.5H9A1.5 1.5 0 0010.5 6V5zm.5-.5a.5.5 0 01-.5.5v1A1.5 1.5 0 0012 4.5h-1zm-.5-.5a.5.5 0 01.5.5h1A1.5 1.5 0 0010.5 3v1zm0-1A1.5 1.5 0 009 4.5h1a.5.5 0 01.5-.5V3z" fill="currentColor"></path></svg> $tags_csv
+            <svg class="svg-button-label-accent" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M.5 7.5l-.354-.354a.5.5 0 000 .708L.5 7.5zm7 7l-.354.354a.5.5 0 00.708 0L7.5 14.5zm7-7l.354.354A.5.5 0 0015 7.5h-.5zm-7-7V0a.5.5 0 00-.354.146L7.5.5zM.146 7.854l7 7 .708-.708-7-7-.708.708zm7.708 7l7-7-.708-.708-7 7 .708.708zM15 7.5v-6h-1v6h1zM13.5 0h-6v1h6V0zM7.146.146l-7 7 .708.708 7-7-.708-.708zM15 1.5A1.5 1.5 0 0013.5 0v1a.5.5 0 01.5.5h1zM10.5 5a.5.5 0 01-.5-.5H9A1.5 1.5 0 0010.5 6V5zm.5-.5a.5.5 0 01-.5.5v1A1.5 1.5 0 0012 4.5h-1zm-.5-.5a.5.5 0 01.5.5h1A1.5 1.5 0 0010.5 3v1zm0-1A1.5 1.5 0 009 4.5h1a.5.5 0 01.5-.5V3z" fill="currentColor"></path></svg>&emsp;$tags_csv
             </i>
             $first_paragraph
         </div>
@@ -272,9 +270,9 @@
         $html = '';
         $html_article_template = '
         <div class="aeitem">
-            <a href="/article?id=$url"><svg style="display:inline-block; vertical-align:middle;height:1em;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M.5 7.5l-.464-.186a.5.5 0 000 .372L.5 7.5zm14 0l.464.186a.5.5 0 000-.372L14.5 7.5zm-7 4.5c-2.314 0-3.939-1.152-5.003-2.334a9.368 9.368 0 01-1.449-2.164 5.065 5.065 0 01-.08-.18l-.004-.007v-.001L.5 7.5l-.464.186v.002l.003.004a2.107 2.107 0 00.026.063l.078.173a10.368 10.368 0 001.61 2.406C2.94 11.652 4.814 13 7.5 13v-1zm-7-4.5l.464.186.004-.008a2.62 2.62 0 01.08-.18 9.368 9.368 0 011.449-2.164C3.56 4.152 5.186 3 7.5 3V2C4.814 2 2.939 3.348 1.753 4.666a10.367 10.367 0 00-1.61 2.406 6.05 6.05 0 00-.104.236l-.002.004v.001H.035L.5 7.5zm7-4.5c2.314 0 3.939 1.152 5.003 2.334a9.37 9.37 0 011.449 2.164 4.705 4.705 0 01.08.18l.004.007v.001L14.5 7.5l.464-.186v-.002l-.003-.004a.656.656 0 00-.026-.063 9.094 9.094 0 00-.39-.773 10.365 10.365 0 00-1.298-1.806C12.06 3.348 10.186 2 7.5 2v1zm7 4.5a68.887 68.887 0 01-.464-.186l-.003.008-.015.035-.066.145a9.37 9.37 0 01-1.449 2.164C11.44 10.848 9.814 12 7.5 12v1c2.686 0 4.561-1.348 5.747-2.665a10.366 10.366 0 001.61-2.407 6.164 6.164 0 00.104-.236l.002-.004v-.001h.001L14.5 7.5zM7.5 9A1.5 1.5 0 016 7.5H5A2.5 2.5 0 007.5 10V9zM9 7.5A1.5 1.5 0 017.5 9v1A2.5 2.5 0 0010 7.5H9zM7.5 6A1.5 1.5 0 019 7.5h1A2.5 2.5 0 007.5 5v1zm0-1A2.5 2.5 0 005 7.5h1A1.5 1.5 0 017.5 6V5z" fill="currentColor"></path></svg>&emsp;View</a>
-            <a href="/admin/edit.php?id=$url"><svg style="display:inline-block; vertical-align:middle;height:1em;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 8.5l-.354-.354L4 8.293V8.5h.5zm4-4l.354-.354a.5.5 0 00-.708 0L8.5 4.5zm2 2l.354.354a.5.5 0 000-.708L10.5 6.5zm-4 4v.5h.207l.147-.146L6.5 10.5zm-2 0H4a.5.5 0 00.5.5v-.5zm3 3.5A6.5 6.5 0 011 7.5H0A7.5 7.5 0 007.5 15v-1zM14 7.5A6.5 6.5 0 017.5 14v1A7.5 7.5 0 0015 7.5h-1zM7.5 1A6.5 6.5 0 0114 7.5h1A7.5 7.5 0 007.5 0v1zm0-1A7.5 7.5 0 000 7.5h1A6.5 6.5 0 017.5 1V0zM4.854 8.854l4-4-.708-.708-4 4 .708.708zm3.292-4l2 2 .708-.708-2-2-.708.708zm2 1.292l-4 4 .708.708 4-4-.708-.708zM6.5 10h-2v1h2v-1zm-1.5.5v-2H4v2h1z" fill="currentColor"></path></svg>&emsp;Edit</a>
-            <a href="/admin/delete.php?id=$url" class="danger"><svg style="display:inline-block; vertical-align:middle;height:1em;line-height: 1;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 .5H1.5a1 1 0 00-1 1V4M6 .5h3m2 0h2.5a1 1 0 011 1V4M.5 6v3m14-3v3m-14 2v2.5a1 1 0 001 1H4M14.5 11v2.5a1 1 0 01-1 1H11m-7-7h7m-5 7h3" stroke="currentColor"></path></svg>&emsp;Delete</a>
+        <svg class="svg-button-label-accent" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M.5 7.5l-.464-.186a.5.5 0 000 .372L.5 7.5zm14 0l.464.186a.5.5 0 000-.372L14.5 7.5zm-7 4.5c-2.314 0-3.939-1.152-5.003-2.334a9.368 9.368 0 01-1.449-2.164 5.065 5.065 0 01-.08-.18l-.004-.007v-.001L.5 7.5l-.464.186v.002l.003.004a2.107 2.107 0 00.026.063l.078.173a10.368 10.368 0 001.61 2.406C2.94 11.652 4.814 13 7.5 13v-1zm-7-4.5l.464.186.004-.008a2.62 2.62 0 01.08-.18 9.368 9.368 0 011.449-2.164C3.56 4.152 5.186 3 7.5 3V2C4.814 2 2.939 3.348 1.753 4.666a10.367 10.367 0 00-1.61 2.406 6.05 6.05 0 00-.104.236l-.002.004v.001H.035L.5 7.5zm7-4.5c2.314 0 3.939 1.152 5.003 2.334a9.37 9.37 0 011.449 2.164 4.705 4.705 0 01.08.18l.004.007v.001L14.5 7.5l.464-.186v-.002l-.003-.004a.656.656 0 00-.026-.063 9.094 9.094 0 00-.39-.773 10.365 10.365 0 00-1.298-1.806C12.06 3.348 10.186 2 7.5 2v1zm7 4.5a68.887 68.887 0 01-.464-.186l-.003.008-.015.035-.066.145a9.37 9.37 0 01-1.449 2.164C11.44 10.848 9.814 12 7.5 12v1c2.686 0 4.561-1.348 5.747-2.665a10.366 10.366 0 001.61-2.407 6.164 6.164 0 00.104-.236l.002-.004v-.001h.001L14.5 7.5zM7.5 9A1.5 1.5 0 016 7.5H5A2.5 2.5 0 007.5 10V9zM9 7.5A1.5 1.5 0 017.5 9v1A2.5 2.5 0 0010 7.5H9zM7.5 6A1.5 1.5 0 019 7.5h1A2.5 2.5 0 007.5 5v1zm0-1A2.5 2.5 0 005 7.5h1A1.5 1.5 0 017.5 6V5z" fill="currentColor"></path></svg>&emsp;<a href="/article?id=$url">View</a>
+        <svg class="svg-button-label-accent" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 8.5l-.354-.354L4 8.293V8.5h.5zm4-4l.354-.354a.5.5 0 00-.708 0L8.5 4.5zm2 2l.354.354a.5.5 0 000-.708L10.5 6.5zm-4 4v.5h.207l.147-.146L6.5 10.5zm-2 0H4a.5.5 0 00.5.5v-.5zm3 3.5A6.5 6.5 0 011 7.5H0A7.5 7.5 0 007.5 15v-1zM14 7.5A6.5 6.5 0 017.5 14v1A7.5 7.5 0 0015 7.5h-1zM7.5 1A6.5 6.5 0 0114 7.5h1A7.5 7.5 0 007.5 0v1zm0-1A7.5 7.5 0 000 7.5h1A6.5 6.5 0 017.5 1V0zM4.854 8.854l4-4-.708-.708-4 4 .708.708zm3.292-4l2 2 .708-.708-2-2-.708.708zm2 1.292l-4 4 .708.708 4-4-.708-.708zM6.5 10h-2v1h2v-1zm-1.5.5v-2H4v2h1z" fill="currentColor"></path></svg>&emsp;<a href="/admin/edit.php?id=$url">Edit</a>
+        <svg class="svg-button-label-red" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 .5H1.5a1 1 0 00-1 1V4M6 .5h3m2 0h2.5a1 1 0 011 1V4M.5 6v3m14-3v3m-14 2v2.5a1 1 0 001 1H4M14.5 11v2.5a1 1 0 01-1 1H11m-7-7h7m-5 7h3" stroke="currentColor"></path></svg>&emsp;<a href="/admin/delete.php?id=$url" class="danger">Delete</a>
             <p class="$class">$title</p>
         </div>
         ';
@@ -282,7 +280,7 @@
             $translation_array = array(
                 '$title' => $article["title"],
                 '$url' => $article["url"],
-                '$class' => ($article["hidden"] != 1) ? 'thinp' : 'thinp hidden-item'
+                '$class' => ($article["hidden"] != 1) ? 'thinp' : 'thinp hidden-item',
             );
             $html .= strtr($html_article_template, $translation_array);
         }
@@ -294,14 +292,14 @@
         $html = "";
         $html_taglist_template = '
         <div class="aeitem">
-            <a href="/admin/deletetag.php?tag_name=$tag_name" class="danger"><svg style="display:inline-block; vertical-align:middle;height:1em;line-height: 1;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 .5H1.5a1 1 0 00-1 1V4M6 .5h3m2 0h2.5a1 1 0 011 1V4M.5 6v3m14-3v3m-14 2v2.5a1 1 0 001 1H4M14.5 11v2.5a1 1 0 01-1 1H11m-7-7h7m-5 7h3" stroke="currentColor"></path></svg>&emsp;Delete</a>
+        <svg class="svg-button-label-red" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 .5H1.5a1 1 0 00-1 1V4M6 .5h3m2 0h2.5a1 1 0 011 1V4M.5 6v3m14-3v3m-14 2v2.5a1 1 0 001 1H4M14.5 11v2.5a1 1 0 01-1 1H11m-7-7h7m-5 7h3" stroke="currentColor"></path></svg>&emsp;<a href="/admin/deletetag.php?tag_name=$tag_name" class="danger">Delete</a>
             <a style="text-decoration: none;">( $tag_count )</a><p class="thinp">$tag_name</p>
         </div>
         ';
         foreach ($tags_array as $tag_name) {
             $translation_array = array(
                 '$tag_name' => $tag_name["tag_name"],
-                '$tag_count' => count_tag($tag_name["tag_name"], True)
+                '$tag_count' => count_tag($tag_name["tag_name"], True),
             );
             $html .= strtr($html_taglist_template, $translation_array);
         }
@@ -310,7 +308,7 @@
 
     // article_edit_html()
     function article_edit_html($url) {
-        $article = get_article($url);
+        $article = get_article_data($url);
 
         // Construct and return the HTML
         $html_article_template = '
@@ -480,7 +478,7 @@
 
     // article_delete_confirm_html()
     function article_delete_confirm_html($url) {
-        $article = get_article($url);
+        $article = get_article_data($url);
 
         // Construct and return the HTML
         $html_article_template = '
@@ -536,9 +534,11 @@
         <h1>Admin Control Panel</h1>
         <h2>Quick Actions</h2>
 
-            <a href ="/admin/newarticle.php"><svg style="display:inline-block; vertical-align:middle;height:1em;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5.5l.354-.354L10.707 0H10.5v.5zm3 3h.5v-.207l-.146-.147-.354.354zm-1 10.5h-10v1h10v-1zM2 13.5v-12H1v12h1zM2.5 1h8V0h-8v1zM13 3.5v10h1v-10h-1zM10.146.854l3 3 .708-.708-3-3-.708.708zM2.5 14a.5.5 0 01-.5-.5H1A1.5 1.5 0 002.5 15v-1zm10 1a1.5 1.5 0 001.5-1.5h-1a.5.5 0 01-.5.5v1zM2 1.5a.5.5 0 01.5-.5V0A1.5 1.5 0 001 1.5h1zM7 5v5h1V5H7zM5 8h5V7H5v1z" fill="currentColor"></path></svg>&emsp;Create a new article</a><br>
-            <a href ="/admin/newtag.php"><svg style="display:inline-block; vertical-align:middle;height:1em;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M.5 7.5l-.354-.354a.5.5 0 000 .708L.5 7.5zm7 7l-.354.354a.5.5 0 00.708 0L7.5 14.5zm7-7l.354.354A.5.5 0 0015 7.5h-.5zm-7-7V0a.5.5 0 00-.354.146L7.5.5zM.146 7.854l7 7 .708-.708-7-7-.708.708zm7.708 7l7-7-.708-.708-7 7 .708.708zM15 7.5v-6h-1v6h1zM13.5 0h-6v1h6V0zM7.146.146l-7 7 .708.708 7-7-.708-.708zM15 1.5A1.5 1.5 0 0013.5 0v1a.5.5 0 01.5.5h1zM10.5 5a.5.5 0 01-.5-.5H9A1.5 1.5 0 0010.5 6V5zm.5-.5a.5.5 0 01-.5.5v1A1.5 1.5 0 0012 4.5h-1zm-.5-.5a.5.5 0 01.5.5h1A1.5 1.5 0 0010.5 3v1zm0-1A1.5 1.5 0 009 4.5h1a.5.5 0 01.5-.5V3z" fill="currentColor"></path></svg>&emsp;Create a new tag</a><br>
-            
+        <svg class="svg-button-label-accent" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5.5l.354-.354L10.707 0H10.5v.5zm3 3h.5v-.207l-.146-.147-.354.354zm-1 10.5h-10v1h10v-1zM2 13.5v-12H1v12h1zM2.5 1h8V0h-8v1zM13 3.5v10h1v-10h-1zM10.146.854l3 3 .708-.708-3-3-.708.708zM2.5 14a.5.5 0 01-.5-.5H1A1.5 1.5 0 002.5 15v-1zm10 1a1.5 1.5 0 001.5-1.5h-1a.5.5 0 01-.5.5v1zM2 1.5a.5.5 0 01.5-.5V0A1.5 1.5 0 001 1.5h1zM7 5v5h1V5H7zM5 8h5V7H5v1z" fill="currentColor"></path></svg>&emsp;<a href ="/admin/newarticle.php">Create a new article</a><br>
+        <svg class="svg-button-label-accent" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M.5 7.5l-.354-.354a.5.5 0 000 .708L.5 7.5zm7 7l-.354.354a.5.5 0 00.708 0L7.5 14.5zm7-7l.354.354A.5.5 0 0015 7.5h-.5zm-7-7V0a.5.5 0 00-.354.146L7.5.5zM.146 7.854l7 7 .708-.708-7-7-.708.708zm7.708 7l7-7-.708-.708-7 7 .708.708zM15 7.5v-6h-1v6h1zM13.5 0h-6v1h6V0zM7.146.146l-7 7 .708.708 7-7-.708-.708zM15 1.5A1.5 1.5 0 0013.5 0v1a.5.5 0 01.5.5h1zM10.5 5a.5.5 0 01-.5-.5H9A1.5 1.5 0 0010.5 6V5zm.5-.5a.5.5 0 01-.5.5v1A1.5 1.5 0 0012 4.5h-1zm-.5-.5a.5.5 0 01.5.5h1A1.5 1.5 0 0010.5 3v1zm0-1A1.5 1.5 0 009 4.5h1a.5.5 0 01.5-.5V3z" fill="currentColor"></path></svg>&emsp;<a href ="/admin/newtag.php">Create a new tag</a><br>
+        <svg class="svg-button-label-accent" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M5.944.5l-.086.437-.329 1.598a5.52 5.52 0 00-1.434.823L2.487 2.82l-.432-.133-.224.385L.724 4.923.5 5.31l.328.287 1.244 1.058c-.045.277-.103.55-.103.841 0 .291.058.565.103.842L.828 9.395.5 9.682l.224.386 1.107 1.85.224.387.432-.135 1.608-.537c.431.338.908.622 1.434.823l.329 1.598.086.437h3.111l.087-.437.328-1.598a5.524 5.524 0 001.434-.823l1.608.537.432.135.225-.386 1.106-1.851.225-.386-.329-.287-1.244-1.058c.046-.277.103-.55.103-.842 0-.29-.057-.564-.103-.841l1.244-1.058.329-.287-.225-.386-1.106-1.85-.225-.386-.432.134-1.608.537a5.52 5.52 0 00-1.434-.823L9.142.937 9.055.5H5.944z" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round"></path><path clip-rule="evenodd" d="M9.5 7.495a2 2 0 01-4 0 2 2 0 014 0z" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round"></path></svg>&emsp;<a href ="/admin/settings.php">Adjust blog settings</a><br>
+        <svg class="svg-button-label-accent" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 14.5v-3a1 1 0 011-1h4a1 1 0 011 1v3m3 0h-12a1 1 0 01-1-1v-12a1 1 0 011-1h8.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V13.5a1 1 0 01-1 1z" stroke="currentColor"></path></svg>&emsp;<a href ="/admin/export.php">Export Database</a><br>
+
         <h2>Articles ( $article_count )</h2>
         $article_admin_list
         <small>ℹ️&emsp;<i>Articles highlighted in blue are hidden from public index. They may still be accessed via their URL.</i></small>

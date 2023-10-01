@@ -27,7 +27,7 @@
         <meta property="og:locale" content="en_US">
 
         <!-- Page Settings -->
-        <title>$blog_name | admin panel</title>
+        <title>$blog_name | Admin Panel</title>
 
         <!-- RSS Link -->
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss">

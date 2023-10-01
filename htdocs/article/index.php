@@ -17,7 +17,7 @@
         <!-- Meta Properties -->
         <meta property="og:type" content="website"/>
         <meta name="application-name" content="$blog_name">
-        <meta name="description" content="$blog_description">
+        <meta name="description" content="$page_description">
         <meta name="referrer" content="no-referrer">
         <meta property="og:type" content="blog">
         <meta property="og:image" content="/resource/img/logo.png">
@@ -26,7 +26,7 @@
         <meta property="og:locale" content="en_US">
 
         <!-- Page Settings -->
-        <title>$blog_name | $meta_title</title>
+        <title>$blog_name | $page_title</title>
 
         <!-- RSS Link -->
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss">
@@ -49,32 +49,82 @@
     </html>
     ';
 
-    // Check if the user is requesting to view an article
-    $article_title = NULL; // used for the html meta title. probably a better way to do this exists?
-    try {
-        if (isset($_GET['id'])) {
-            $client_url = filter_var($_GET['id'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            if (!article_exists($client_url)) {
-                $page_contents = error_404();
-            } else {
-                $page_contents = article_html($client_url);
-                $article_title = get_article($client_url)["title"];
-                $article_content = get_article($client_url)["content"];
+    /**
+     * build_page()
+     *
+     * Returns a string containing the full HTML contents of the 
+     * page
+     *
+     * @throws Exception
+     * @return array
+     */
+    function build_page() {
+        try {
+            // Is the client requesting to view an article?
+            if (isset($_GET['id'])) {
+
+                // Filter user input
+                $client_url = filter_var($_GET['id'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                // Throw an unspecified error if the filter failed
+                if ($client_url == NULL) {
+                    return array(
+                        'page_content' => error_500(),
+                        'page_title' => "Error",
+                        'page_description' => NULL
+                    );
+                }
+
+                // Check if the article exists, if not, return a 404 page
+                if (!article_exists($client_url)) {
+                    return array(
+                        'page_content' => error_404(),
+                        'page_title' => "404 Not Found",
+                        'page_description' => NULL
+                    );
+                }
+
+                // Build the article to return to the client
+                return array(
+                    'page_content' => article_html($client_url),
+                    'page_title' => get_article_data($client_url)["title"],
+                    'page_description' => strip_tags(preg_split('#\r?\n#', get_article_data($client_url)["content"], 2)[0],'')
+                );
             }
-        } else {
-            $page_contents = get_article_timeline();
+
+            // The client is not requesting to view an article, instead,
+            // return a list of all articles.
+            return array(
+                'page_content' => get_article_timeline(),
+                'page_title' => "Articles",
+                'page_description' => NULL
+            );
+
+        } catch (Exception $e) {
+            return array(
+                'page_content' => error_500(),
+                'page_title' => "Error",
+                'page_description' => NULL
+            );
         }
-    } catch (Exception $e) {
-        $page_contents = error_500();
     }
+
+    // Create and display the page
+    $page_content = build_page();
+
+    // Extract return values
+    $page_content_body = $page_content["page_content"];
+    $page_title = $page_content["page_title"];
+    $page_description = $page_content["page_description"];
 
     $translation_array = array(
         '$theme' => BLOG_THEME,
         '$blog_name' => BLOG_TITLE,
-        '$blog_description' => $article_title ? strip_tags(preg_split('#\r?\n#', $article_content, 2)[0],'') : BLOG_DESCRIPTION,
         '$sidebar_contents' => SIDEBAR_CONTENTS,
-        '$page_contents' => $page_contents,
-        '$meta_title' => $article_title ? $article_title : 'articles'
+        '$page_contents' => $page_content_body,
+        '$page_title' => $page_title,
+        '$page_description' => $page_description ? $page_description : BLOG_DESCRIPTION, 
     );
+
     echo(strtr($html_template, $translation_array));
 ?>

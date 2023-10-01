@@ -2,7 +2,7 @@
     --font_mono:FontMono;
     --font_primary:FontSerif;
     --text:#24221f;
-    --text-inverted:#24221f;
+    --text-no-invert:#24221f;
     --background:#fdfcfc;
     --primary:#ffaa60;
     --secondary:#fffbf7;
@@ -23,16 +23,18 @@
         --font_mono:FontMono;
         --font_primary:FontSerif;
         --text: #fdfcfc;
-        --text-inverted:#24221f;
-        --background: #24221f;
-        --primary: #ffaa60;
-        --secondary: #24221f;
-        --red: #A00;
-        --green: #397300;
-        --accent: #ffaa60;
-        --accent_2: #383733;
-        --accent_3: #383733;
-        --accent_4: #24221f;
+        --background: #181926;
+        --primary: #85c1dc;
+        --secondary: #181926;
+        --accent: #85c1dc;
+        --accent_2: #343338;
+        --accent_3: #353338;
+        --accent_4: #232438;
+        --red: #ffaa60;
+        --green: #00FF00;
+        --blue: #FF0000;
+        --purple: #FF00FF;
+
     }
     .logoimg {
         width:100%;
@@ -155,7 +157,7 @@ th,td {
     border:1px solid #ddd;
     font-family:var(--font_mono) 
 }
-ul,ol,li,h1,h2,h3,h4,p,pre,code,b,i,.article-list-date,small,strong,tr,td,th {
+ul,ol,li,h1,h2,h3,h4,p,pre,code,b,i,.article-list-date,small,strong,tr,td,th, label, textarea, select, input {
     color:var(--text) 
 }
 .white {
@@ -196,10 +198,14 @@ li {
 .aeitem {
     display:flex;
     align-items:center;
-    width:100% 
+    width:100%;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    border-bottom:1px dotted var(--text);
 }
 .aeitem > a {
-    flex:1 auto 
+    flex:1 auto;
+    color:var(--text)
 }
 .aeitem > p {
     display:flex;
@@ -215,7 +221,8 @@ li {
     width:100%;
 }
 img {
-    width: 90%;
+    max-width:100%;
+    min-width:20%;
     margin: auto;
     display: block;
     margin: 0 auto;
@@ -281,7 +288,7 @@ html {
 		margin: auto;
 	}
 	.disable-mobile {
-		display: none;
+		display: none !important;
 	}
     .quote-block {
         width: 95%;
@@ -345,6 +352,7 @@ input[type=submit] {
     font-weight: lighter;
 	cursor: pointer;
     margin: auto;
+    background-color:var(--background);
 }
 label {
     width: 100%;
@@ -357,12 +365,14 @@ input[type=text] {
 	text-align: left;
 	font-family: var(--font_mono);
     font-weight: lighter;
+    background-color:var(--background);
 }
 input[type=date] {
     width: 100%;
 	text-align: left;
 	font-family: var(--font_mono);
     font-weight: lighter;
+    background-color:var(--background);
 }
 select {
     width: 100%;
@@ -370,6 +380,7 @@ select {
 	font-family: var(--font_mono);
     font-weight: lighter;
     border-radius: 0;
+    background-color:var(--background);
 }
 textarea {
     min-width: 100%;
@@ -378,6 +389,7 @@ textarea {
 	font-family: var(--font_mono);
     font-weight: lighter;
 	max-width: 100%;
+    background-color:var(--background);
 }
 .smaller-textarea {
     min-height: 10em;
@@ -454,7 +466,7 @@ code.hljs{
     overflow:auto;
     border:1px solid var(--text);
     border-left:15px solid var(--green);
-    color: var(--text-inverted) !important;
+    color: var(--text-no-invert) !important;
     background-color:var(--light-green);
     padding:1%;
     font-family:var(--font-primary);
@@ -462,13 +474,16 @@ code.hljs{
     font-weight:light;
     margin:auto;
 }
+.greenbox > * {
+    color: var(--text-no-invert) !important;
+}
 .redbox {
     width:95%;
     line-height:1.3em;
     overflow:auto;
     border:1px solid var(--text);
     border-left:15px solid var(--red);
-    color: var(--text-inverted);
+    color: var(--text-no-invert);
     background-color:var(--light-red);
     padding:1%;
     font-family:var(--font-primary);
@@ -476,17 +491,39 @@ code.hljs{
     font-weight:light;
     margin:auto;
 }
+.redbox > * {
+    color: var(--text-no-invert) !important;
+}
 .bluebox {
     width:95%;
     line-height:1.3em;
     overflow:auto;
     border:1px solid var(--text);
     border-left:15px solid var(--blue);
-    color: var(--text-inverted);
+    color: var(--text-no-invert);
     background-color:var(--light-blue);
     padding:1%;
     font-family:var(--font-primary);
     font-style:oblique;
     font-weight:light;
     margin:auto;
+}
+.bluebox > * {
+    color: var(--text-no-invert) !important;
+}
+.bg-accent-4 {
+    background-color: var(--accent_3);
+}
+.svg-button-label-accent {
+    color: var(--accent);
+    display:inline-block;
+    vertical-align:middle;
+    height:1em;
+}
+.svg-button-label-red {
+    color: red;
+    display:inline-block;
+    vertical-align:middle;
+    height:1em;
+    line-height: 1;
 }

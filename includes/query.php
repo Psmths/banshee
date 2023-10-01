@@ -293,20 +293,30 @@ function get_all_tag_names($include_hidden = False) {
 }
 
 /**
- * get_article()
+ * get_article_data()
  *
  * Returns an array for an article if the article exists by URL
+ * that contains all of the article's associated data.
+ * 
+ * This function should not be called before checking if the 
+ * article exists.
  *
  * @param string $url
  * @throws Exception
  * @return array|false
  */
-function get_article($url) {
+function get_article_data($url) {
     try {
         $sql = 'SELECT * FROM articles WHERE url=:article_url';
         $statement = db()->prepare($sql);
         $statement->bindValue('article_url', $url, PDO::PARAM_STR);
         $statement->execute();
+
+        // Throw an exception if the statement returned no data.
+        if ($statement->rowCount() == 0) {
+            throw new Exception("ERROR [Exception]: An article by the specified article URL could not be found.");
+        }
+
         $article = $statement->fetch();
 
         // Perform data output sanitization if needed

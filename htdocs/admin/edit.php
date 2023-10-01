@@ -26,7 +26,7 @@
         <meta property="og:locale" content="en_US">
 
         <!-- Page Settings -->
-        <title>$blog_name | edit article</title>
+        <title>$blog_name | Edit Article</title>
 
         <!-- RSS Link -->
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss">

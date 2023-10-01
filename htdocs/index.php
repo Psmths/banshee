@@ -17,7 +17,7 @@
         <!-- Meta Properties -->
         <meta property="og:type" content="website"/>
         <meta name="application-name" content="$blog_name">
-        <meta name="description" content="$blog_description">
+        <meta name="description" content="$page_description">
         <meta name="referrer" content="no-referrer">
         <meta property="og:type" content="blog">
         <meta property="og:image" content="/resource/img/logo.png">
@@ -26,7 +26,7 @@
         <meta property="og:locale" content="en_US">
 
         <!-- Page Settings -->
-        <title>$blog_name</title>
+        <title>$blog_name | $page_title</title>
 
         <!-- RSS Link -->
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss">
@@ -44,7 +44,16 @@
     </body>
     </html>
     ';
-    
+
+    /**
+     * build_page()
+     *
+     * Returns a string containing the full HTML contents of the 
+     * page
+     *
+     * @throws Exception
+     * @return array
+     */
     function build_page() {
         try {
             $page_content_template = '
@@ -57,20 +66,36 @@
                 '$site_intro' => SITE_INTRO,
                 '$article_list' => get_article_list(get_articles(5, NULL)),
             );
-            return strtr($page_content_template, $translation_array);
+            $page_content = strtr($page_content_template, $translation_array);
+            return array(
+                'page_content' => $page_content,
+                'page_title' => "Home",
+                'page_description' => NULL
+            );
        } catch (Exception $e) {
-           return error_500();
+            return array(
+                'page_content' => error_500(),
+                'page_title' => "Error",
+                'page_description' => NULL
+            );
        }
     }
 
-    $page_contents = build_page();
+    // Create and display the page
+    $page_content = build_page();
+
+    // Extract return values
+    $page_content_body = $page_content["page_content"];
+    $page_title = $page_content["page_title"];
+    $page_description = $page_content["page_description"];
     
     $translation_array = array(
         '$theme' => BLOG_THEME,
         '$blog_name' => BLOG_TITLE,
-        '$blog_description' => BLOG_DESCRIPTION,
         '$sidebar_contents' => SIDEBAR_CONTENTS,
-        '$page_contents' => $page_contents,
+        '$page_contents' => $page_content_body,
+        '$page_title' => $page_title,
+        '$page_description' => $page_description ? $page_description : BLOG_DESCRIPTION,
     );
 
     echo(strtr($html_template, $translation_array));

@@ -26,7 +26,7 @@
         <meta property="og:locale" content="en_US">
 
         <!-- Page Settings -->
-        <title>$blog_name | delete article</title>
+        <title>$blog_name | Delete Article</title>
 
         <!-- RSS Link -->
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss">

@@ -17,7 +17,7 @@ It even comes with some themes!
 
 Additionally, administration is primarily done through an included administrative interface:
 
-![Admin Panel](resource/img/repo_admin_panel.png)
+![Admin Panel](htdocs/resource/img/repo_admin_panel.png)
 
 # Installation
 ## Database Setup
@@ -34,7 +34,7 @@ DocumentRoot /var/www/blog.example.com/htdocs
 
 Header always append X-Content-Type-Options nosniff
 Header always append X-Frame-Options deny
-Header set Content-Security-Policy "default-src 'none'; img-src 'self' data:; media-src 'self'; script-src 'self' 'sha256-O6piNkhLv4BI/Oje+MccCmgUSrS1sIp+CMaOsvD/VWU='; style-src 'self' 'unsafe-inline' data:; font-src 'self' data:; object-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'"
+Header set Content-Security-Policy "default-src 'none'; img-src 'self' data:; media-src 'self'; script-src 'self' 'sha256-O6piNkhLv4BI/Oje+MccCmgUSrS1sIp+CMaOsvD/VWU='; style-src 'self' data:; font-src 'self' data:; object-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'"
 
 ErrorDocument 404 /resource/404.php
 ErrorDocument 401 /resource/401.php

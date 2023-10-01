@@ -24,7 +24,10 @@
 
     header('Content-type: application/xml');
 
-    $articles = get_articles(NULL, NULL);
+    // Grab the most recent 10 articles for the RSS feed
+    $articles = get_articles(10, NULL);
+
+    // Construct the XML document for the RSS feed
     $article_feed_xml = '';
     foreach ($articles as $article) {
         $article_template = '
@@ -37,10 +40,10 @@
         </item>';
         $translation_array = array(
             '$article_title' => $article['title'],
-            '$article_link' => 'https://' . BLOG_DOMAIN . '/' . $article['url'],
+            '$article_link' => 'https://' . BLOG_DOMAIN . '/article/?id=' . $article['url'],
             '$article_description' => strip_tags(preg_split('#\r?\n#', $article['content'], 2)[0]),
             '$article_publish_date' => fmt_rfc822_timestamp($article['timestamp']),
-            '$article_url' => 'https://' . BLOG_DOMAIN . '/' . $article['url'],
+            '$article_url' => 'https://' . BLOG_DOMAIN . '/article/?id=' . $article['url'],
         );
         $article_feed_xml .= strtr($article_template, $translation_array);
     }

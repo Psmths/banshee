@@ -1,0 +1,41 @@
+services:
+  banshee:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: apache-php
+    container_name: banshee
+    restart: unless-stopped
+    depends_on:
+      - banshee-mysql
+    volumes:
+      - ./banshee:/var/www/html
+      - ./.htpasswd:/etc/apache2/.htpasswd
+    env_file:
+      - .env
+  banshee-mysql:
+    image: 'mysql/mysql-server'
+    restart: unless-stopped
+    container_name: banshee-mysql
+    volumes:
+      - ./sqlvol:/var/lib/mysql:rw
+      - ./initdb:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_DATABASE=blog
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_HOST=%
+  banshee-varnish:
+    image: varnish:stable
+    container_name: banshee-varnish
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    volumes:
+      - ./default.vcl:/etc/varnish/default.vcl
+volumes:
+  sqlvol:
+    driver: local
+networks:
+  default:
+    external:
+      name: nginx-network

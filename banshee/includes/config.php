@@ -10,9 +10,9 @@
     define('ALLOWED_ARTICLEHTML_TAGS', '<center><div><b><i><strong><small><p><h1><h2><h3><img><a><ul><ol><li><table><tr><th><td><pre><code><br>');
 
     // Database configuration
-    define('DB_SERVER', '127.0.0.1');
-    define('DB_USERNAME', 'db_user');
-    define('DB_PASSWORD', 'db_password');
+    define('DB_SERVER', getenv('DB_SERVER'));
+    define('DB_USERNAME', getenv('DB_USERNAME'));
+    define('DB_PASSWORD', getenv('DB_PASSWORD'));
     define('DB_NAME', 'blog');
 
     // Sidebar contents

@@ -1,9 +1,9 @@
 <?php
-    require_once "../includes/db.php";
-    require_once "../includes/config.php";
-    require_once "../includes/helper.php";
-    require_once "../includes/query.php";
-    require_once "../includes/info.php";
+    require_once "../../includes/db.php";
+    require_once "../../includes/config.php";
+    require_once "../../includes/helper.php";
+    require_once "../../includes/query.php";
+    require_once "../../includes/info.php";
 
     $html_template = '
     <!DOCTYPE html>
